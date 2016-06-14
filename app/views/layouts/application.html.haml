@@ -1,10 +1,16 @@
 !!!
-%html
+%html{ lang: 'en' }
   %head
+    %title Github Users
     %meta{:content => "text/html; charset=UTF-8", "http-equiv" => "Content-Type"}/
-    %title GithubUsers
-    = stylesheet_link_tag    'application', media: 'all'
-    = javascript_include_tag 'application'
-    = csrf_meta_tags
+    %meta{:name => "viewport", :content => "width=device-width, initial-scale=1.0"}
+    = stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true
+    = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    = csrf_meta_tag
   %body
-    = yield
+    .container-fluid.main
+      %nav.navbar.navbar-light.bg-faded.navbar-fixed-top
+        = link_to 'Github Users', root_path, class: 'navbar-brand'
+      #flash.container
+        = render 'layouts/flash'
+      = yield
