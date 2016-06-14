@@ -5,6 +5,8 @@
 # files.
 
 require 'cucumber/rails'
+require 'simplecov'
+SimpleCov.start 'rails'
 require 'faker'
 
 World(FactoryGirl::Syntax::Methods)
