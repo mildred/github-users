@@ -12,23 +12,36 @@ Feature: As a visitor I want to show informations about a github user
   Scenario: An error is displayed when I search an unexisting user
     Given I am on the root page
     When I search an unexisting github user
-    Then an error "This is not a valid github user" is displayed
+    Then an error "is not a valid github user" is displayed
 
+  Scenario Outline: Display name of found user
+    Given I am on the root page
+    When I search an existing github "<username>"
+    Then I can show the "<name>" of the user
+    Examples:
+    |username|name|
+    |eunomie|Yves Brissaud|
+    |defunkt|Chris Wanstrath|
+
+  @wip
   Scenario: Display repositories of the user
     Given I am on the root page
-    When I search an existing github user
+    When I search an existing github "<username>"
     Then I display a list of all github repositories
 
+  @wip
   Scenario: Display date of repositories
     Given I am on the root page
-    When I search an existing github user
+    When I search an existing github "<username>"
     Then I display a date for all repositories
 
+  @wip
   Scenario: Order repositories by date
     Given I am on the root page
-    When I search an existing github user
+    When I search an existing github "<username>"
     Then I order repositories by date
 
+  @wip
   Scenario: User has no repository
     Given I am on the root page
     When I search an existing github user without repository

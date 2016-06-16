@@ -1,4 +1,4 @@
-= form_tag(remote: true) do
+= form_tag('/search', method: :get) do
   %fieldset.form-group
     = label_tag(:name, 'Search for user')
     = text_field_tag(:name, nil, class: 'form-control', placeholder: 'Enter GitHub user name')
