@@ -23,6 +23,13 @@ Then(/^I can show the "([^"]*)" of the user$/) do |name|
   expect(page.find('h1')).to have_content name
 end
 
+Then(/^I display a list of github "([^"]*)"$/) do |repositories|
+  expect(page).to have_css('ul li')
+  repositories.split(',').each do |repo|
+    expect(page).to have_css('ul li', text: repo)
+  end
+end
+
 Then(/^an error "([^"]*)" is displayed$/) do |message|
   expect(page).to have_css('.alert.alert-alert')
   expect(page.find('.alert.alert-alert')).to have_content message

@@ -1,1 +1,6 @@
 %h1= @user.name
+
+%ul
+  - @user.repositories.each do |repo|
+    %li
+      = repo.name

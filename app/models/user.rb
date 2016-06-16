@@ -6,11 +6,11 @@ class User
 
   attr_reader :login, :name, :repositories
 
-  Contract KeywordArgs[login: String, name: String] => User
-  def initialize(login:, name:)
+  Contract KeywordArgs[login: String, name: String, repositories: ArrayOf[Repository]] => User
+  def initialize(login:, name:, repositories:)
     @login = login
     @name = name
-    @repositories = []
+    @repositories = repositories
     self
   end
 
@@ -21,8 +21,8 @@ class User
       repositories == other.repositories
   end
 
-  Contract RespondTo[:login, :name] => User
-  def self.from(user)
-    User.new login: user.login, name: user.name
+  Contract RespondTo[:login, :name], KeywordArgs[with_repositories: ArrayOf[Repository]] => User
+  def self.from(user, with_repositories:)
+    User.new login: user.login, name: user.name, repositories: with_repositories
   end
 end

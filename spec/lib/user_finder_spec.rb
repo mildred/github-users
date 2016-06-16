@@ -45,7 +45,7 @@ RSpec.describe UserFinder do
     end
 
     before { class_double('Octokit').as_null_object }
-    let(:name) { Faker::Superhero.name }
+    let(:name) { Faker::Superhero.name + ' ' + Faker::Superhero.power }
     subject { UserFinder.new(listener) }
 
     context 'parameter validation' do
@@ -73,10 +73,24 @@ RSpec.describe UserFinder do
     end
 
     context 'with a valid github user' do
+      let(:repositories) do
+        [
+          Repository.new(name: Faker::Superhero.name,
+                         updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+          Repository.new(name: Faker::Superhero.name,
+                         updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+        ]
+      end
       let(:user_name) { Faker::Superhero.name }
-      let(:user) { User.new(login: user_name, name: name) }
+      let(:user) { User.new(login: user_name, name: name, repositories: repositories) }
       let(:octokit_user) { Sawyer::Resource.new(Octokit.agent, login: user_name, name: name) }
+      let(:octokit_repos) do
+        repositories.map do |repo|
+          Sawyer::Resource.new(Octokit.agent, name: repo.name, updated_at: repo.updated_at)
+        end
+      end
       before { allow(Octokit).to receive(:user).with(name).and_return(octokit_user) }
+      before { allow(Octokit).to receive(:repositories).with(name).and_return(octokit_repos) }
       before { allow(listener).to receive(:user_found) }
 
       it 'should call the user_found method with the user' do

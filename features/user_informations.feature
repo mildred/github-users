@@ -23,11 +23,13 @@ Feature: As a visitor I want to show informations about a github user
     |eunomie|Yves Brissaud|
     |defunkt|Chris Wanstrath|
 
-  @wip
-  Scenario: Display repositories of the user
+  Scenario Outline: Display repositories of the user
     Given I am on the root page
     When I search an existing github "<username>"
-    Then I display a list of all github repositories
+    Then I display a list of github "<repositories>"
+    Examples:
+    |username|repositories|
+    |eunomie|12factor,action_cable_demo,angular-phonecat,angular.js,asentaa|
 
   @wip
   Scenario: Display date of repositories
