@@ -30,6 +30,13 @@ Then(/^I display a list of github "([^"]*)"$/) do |repositories|
   end
 end
 
+Then(/^I display a date for github "([^"]*)"$/) do |repositories|
+  repositories.split(',').each do |repo|
+    infos = repo.split('!')
+    expect(page).to have_css('.card', text: /#{infos.first}.*#{infos.last}/)
+  end
+end
+
 Then(/^an error "([^"]*)" is displayed$/) do |message|
   expect(page).to have_css('.alert.alert-alert')
   expect(page.find('.alert.alert-alert')).to have_content message

@@ -31,5 +31,16 @@ RSpec.describe 'search/search.html.haml' do
         expect(rendered).to have_selector '.card-title', text: repo.name
       end
     end
+
+    it 'should display the name and the date of repositories' do
+      assign(:user, user)
+      render
+
+      repositories.each do |repo|
+        expect(rendered).to have_selector '.card' do |card|
+          expect(card).to contain(/#{repo.name}.*#{repo.updated_at}/)
+        end
+      end
+    end
   end
 end
