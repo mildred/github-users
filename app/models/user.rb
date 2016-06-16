@@ -14,13 +14,14 @@ class User
     self
   end
 
+  Contract User => Bool
   def ==(other)
     login == other.login &&
       name == other.name &&
       repositories == other.repositories
   end
 
-  Contract Sawyer::Resource => User
+  Contract RespondTo[:login, :name] => User
   def self.from(user)
     User.new login: user.login, name: user.name
   end
