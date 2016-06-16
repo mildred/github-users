@@ -16,7 +16,7 @@ class UserFinder
     begin
       user = find_user name
       @listener.user_found user
-    rescue
+    rescue Octokit::NotFound
       @listener.user_not_found InvalidGithubUser.new(name)
     end
     nil
@@ -24,9 +24,9 @@ class UserFinder
 
   private
 
-  Contract String => { name: String }
+  Contract String => User
   def find_user(name)
     user = Octokit.user name
-    user.to_hash
+    User.from user
   end
 end

@@ -22,7 +22,8 @@ RSpec.describe SearchController, type: :controller do
     context 'when user is found' do
       let(:user_name) { Faker::Superhero.name }
       let(:name) { 'eunomie' }
-      before { allow(Octokit).to receive(:user).with(name).and_return(name: user_name) }
+      let(:octokit_user) { Sawyer::Resource.new(Octokit.agent, login: name, name: user_name) }
+      before { allow(Octokit).to receive(:user).with(name).and_return(octokit_user) }
 
       it 'should render the search template' do
         get :search, name: name

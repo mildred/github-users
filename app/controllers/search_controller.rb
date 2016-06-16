@@ -11,7 +11,7 @@ class SearchController < ApplicationController
     finder.find_by_name params[:name]
   end
 
-  Contract({ name: String } => Any)
+  Contract(User => Any)
   def user_found(user)
     @user = user
     render :search

@@ -74,12 +74,14 @@ RSpec.describe UserFinder do
 
     context 'with a valid github user' do
       let(:user_name) { Faker::Superhero.name }
-      before { allow(Octokit).to receive(:user).with(name).and_return(name: user_name) }
+      let(:user) { User.new(login: user_name, name: name) }
+      let(:octokit_user) { Sawyer::Resource.new(Octokit.agent, login: user_name, name: name) }
+      before { allow(Octokit).to receive(:user).with(name).and_return(octokit_user) }
       before { allow(listener).to receive(:user_found) }
 
       it 'should call the user_found method with the user' do
         subject.find_by_name name
-        expect(listener).to have_received(:user_found).with(hash_including(name: user_name))
+        expect(listener).to have_received(:user_found).with(user)
       end
     end
   end
