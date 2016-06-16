@@ -24,9 +24,9 @@ Then(/^I can show the "([^"]*)" of the user$/) do |name|
 end
 
 Then(/^I display a list of github "([^"]*)"$/) do |repositories|
-  expect(page).to have_css('ul li')
+  expect(page).to have_css('.row .card')
   repositories.split(',').each do |repo|
-    expect(page).to have_css('ul li', text: repo)
+    expect(page).to have_css('.card-title', text: repo)
   end
 end
 

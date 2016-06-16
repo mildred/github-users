@@ -28,7 +28,7 @@ RSpec.describe 'search/search.html.haml' do
       render
 
       repositories.each do |repo|
-        expect(rendered).to have_selector 'ul li', text: repo.name
+        expect(rendered).to have_selector '.card-title', text: repo.name
       end
     end
   end
