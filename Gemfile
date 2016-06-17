@@ -72,6 +72,9 @@ source 'https://rails-assets.org' do
   gem 'rails-assets-tether', '>= 1.1.0'
 end
 
+gem 'octokit', '~> 4.0'
+gem 'contracts', '~> 0.14.0'
+
 group :production do
   gem 'rails_12factor'
 end
