@@ -13,9 +13,9 @@ RSpec.describe 'search/search.html.haml' do
       ]
     end
     let(:user) do
-      UserPresenter.new(User.new(name: Faker::Superhero.name,
-                                 login: Faker::Superhero.name,
-                                 repositories: repositories))
+      UserPresenter.new(GithubUser.new(name: Faker::Superhero.name,
+                                       login: Faker::Superhero.name,
+                                       repositories: repositories))
     end
 
     it 'should display the name of the user' do
@@ -48,9 +48,9 @@ RSpec.describe 'search/search.html.haml' do
 
   context 'Given a user without repository' do
     let(:user) do
-      UserPresenter.new(User.new(name: Faker::Superhero.name,
-                                 login: Faker::Superhero.name,
-                                 repositories: []))
+      UserPresenter.new(GithubUser.new(name: Faker::Superhero.name,
+                                       login: Faker::Superhero.name,
+                                       repositories: []))
     end
 
     it 'should display an message' do

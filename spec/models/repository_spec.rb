@@ -34,7 +34,7 @@ RSpec.describe Repository do
 
   describe '::most_recent_date' do
     let(:date) { Faker::Time.between(2.days.ago, Time.zone.today) }
-    let(:date_before) { Faker::Time.between(3.days.ago(date), 1.days.ago(date)) }
+    let(:date_before) { Faker::Time.between(3.days.ago(date), 1.day.ago(date)) }
 
     it 'should return the most recent date' do
       expect(Repository.most_recent_date(date, date_before)).to eq date
@@ -60,9 +60,13 @@ RSpec.describe Repository do
   end
 
   describe '::from' do
-    let(:octokit_repo) { Sawyer::Resource.new(Octokit.agent, name: name, updated_at: updated_at, pushed_at: pushed_at) }
+    let(:octokit_repo) do
+      Sawyer::Resource.new(Octokit.agent, name: name, updated_at: updated_at, pushed_at: pushed_at)
+    end
     let(:most_recent_date) { Repository.most_recent_date(updated_at, pushed_at) }
-    before { allow(Repository).to receive(:new).with(name: name, updated_at: most_recent_date).and_call_original }
+    before do
+      allow(Repository).to receive(:new).with(name: name, updated_at: most_recent_date).and_call_original
+    end
 
     it 'should create a new repository with name and date' do
       allow(Repository).to receive(:most_recent_date).with(updated_at, pushed_at).and_call_original

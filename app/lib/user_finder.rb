@@ -24,11 +24,11 @@ class UserFinder
 
   private
 
-  Contract String => User
+  Contract String => GithubUser
   def find_user(name)
     octokit_user = Octokit.user name
     octokit_repos = Octokit.repositories name
     repos = octokit_repos.map { |repo| Repository.from repo }
-    User.from octokit_user, with_repositories: repos
+    GithubUser.from octokit_user, with_repositories: repos
   end
 end

@@ -13,7 +13,7 @@ RSpec.describe UserPresenter do
   end
   let(:name) { Faker::Superhero.name }
   let(:user_name) { Faker::Superhero.name }
-  let(:user) { User.new(login: user_name, name: name, repositories: repositories) }
+  let(:user) { GithubUser.new(login: user_name, name: name, repositories: repositories) }
 
   describe '::new' do
     it 'should accept User' do
@@ -24,7 +24,7 @@ RSpec.describe UserPresenter do
       expect { UserPresenter.new(2) }.to raise_error ContractError
       expect { UserPresenter.new(nil) }.to raise_error ContractError
       expect { UserPresenter.new([]) }.to raise_error ContractError
-      expect { UserPresenter.new([User]) }.to raise_error ContractError
+      expect { UserPresenter.new([GithubUser]) }.to raise_error ContractError
       expect { UserPresenter.new({}) }.to raise_error ContractError
       expect { UserPresenter.new(true) }.to raise_error ContractError
       expect { UserPresenter.new(repositories.first) }.to raise_error ContractError

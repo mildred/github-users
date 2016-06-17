@@ -17,7 +17,9 @@ When(/^I search an existing github "([^"]*)"$/) do |username|
 end
 
 When(/^I search an existing github user without repository$/) do
-  octokit_user = Sawyer::Resource.new(Octokit.agent, login: Faker::Superhero.name, name: Faker::Superhero.name)
+  octokit_user = Sawyer::Resource.new(Octokit.agent,
+                                      login: Faker::Superhero.name,
+                                      name: Faker::Superhero.name)
   allow(Octokit).to receive(:user).with(octokit_user.name).and_return(octokit_user)
   allow(Octokit).to receive(:repositories).and_return([])
   within('form') do

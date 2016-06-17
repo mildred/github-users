@@ -6,13 +6,13 @@ class UserPresenter < SimpleDelegator
 
   delegate :name, to: :user
 
-  Contract User => UserPresenter
+  Contract GithubUser => UserPresenter
   def initialize(user)
     super user
     self
   end
 
-  Contract None => User
+  Contract None => GithubUser
   def user
     __getobj__
   end
