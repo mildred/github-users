@@ -10,6 +10,7 @@ class User < ActiveRecord::Base
   def self.create_or_update(github_user)
     user = find_or_create_by login: github_user.login
     user.update name: github_user.name,
+                followers: github_user.followers,
                 repositories: github_user.repositories.map { |repo| Repository.create_or_update repo }
     user
   end

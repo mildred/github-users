@@ -24,7 +24,8 @@ end
 When(/^I search an existing github user without repository$/) do
   octokit_user = Sawyer::Resource.new(Octokit.agent,
                                       login: Faker::Superhero.name,
-                                      name: Faker::Superhero.name)
+                                      name: Faker::Superhero.name,
+                                      followers: Faker::Number.number(3).to_i)
   allow(Octokit).to receive(:user).with(octokit_user.name).and_return(octokit_user)
   allow(Octokit).to receive(:repositories).and_return([])
   within('form') do
@@ -87,4 +88,8 @@ end
 Then(/^I update the user$/) do
   expect(User.where(login: @user.login).count).to eq 1
   expect(User.find_by(login: @user.login).repositories).not_to be_empty
+end
+
+Then(/^I store the number of followers for the user identified by "([^"]*)"$/) do |username|
+  expect(User.find_by(login: username).followers).to be > 0
 end

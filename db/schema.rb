@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617145411) do
+ActiveRecord::Schema.define(version: 20160617173026) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -25,8 +25,9 @@ ActiveRecord::Schema.define(version: 20160617145411) do
   add_index "repositories", ["user_id"], name: "index_repositories_on_user_id", using: :btree
 
   create_table "users", force: :cascade do |t|
-    t.string "login"
-    t.string "name"
+    t.string  "login"
+    t.string  "name"
+    t.integer "followers", default: 0
   end
 
   add_foreign_key "repositories", "users"

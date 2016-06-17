@@ -82,8 +82,19 @@ RSpec.describe UserFinder do
         ]
       end
       let(:user_name) { Faker::Superhero.name }
-      let(:user) { GithubUser.new(login: user_name, name: name, repositories: repositories) }
-      let(:octokit_user) { Sawyer::Resource.new(Octokit.agent, login: user_name, name: name) }
+      let(:followers) { Faker::Number.number(3).to_i }
+      let(:user) do
+        GithubUser.new(login: user_name,
+                       name: name,
+                       followers: followers,
+                       repositories: repositories)
+      end
+      let(:octokit_user) do
+        Sawyer::Resource.new(Octokit.agent,
+                             login: user_name,
+                             name: name,
+                             followers: followers)
+      end
       let(:octokit_repos) do
         repositories.map do |repo|
           Sawyer::Resource.new(Octokit.agent, name: repo.name, updated_at: repo.updated_at, pushed_at: nil)

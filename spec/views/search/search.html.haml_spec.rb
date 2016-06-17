@@ -15,6 +15,7 @@ RSpec.describe 'search/search.html.haml' do
     let(:user) do
       UserPresenter.new(GithubUser.new(name: Faker::Superhero.name,
                                        login: Faker::Superhero.name,
+                                       followers: Faker::Number.number(3).to_i,
                                        repositories: repositories))
     end
 
@@ -50,6 +51,7 @@ RSpec.describe 'search/search.html.haml' do
     let(:user) do
       UserPresenter.new(GithubUser.new(name: Faker::Superhero.name,
                                        login: Faker::Superhero.name,
+                                       followers: Faker::Number.number(3).to_i,
                                        repositories: []))
     end
 

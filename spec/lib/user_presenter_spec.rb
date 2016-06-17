@@ -13,7 +13,13 @@ RSpec.describe UserPresenter do
   end
   let(:name) { Faker::Superhero.name }
   let(:user_name) { Faker::Superhero.name }
-  let(:user) { GithubUser.new(login: user_name, name: name, repositories: repositories) }
+  let(:followers) { Faker::Number.number(3).to_i }
+  let(:user) do
+    GithubUser.new(login: user_name,
+                   name: name,
+                   followers: followers,
+                   repositories: repositories)
+  end
 
   describe '::new' do
     it 'should accept User' do
