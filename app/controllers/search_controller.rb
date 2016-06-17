@@ -7,7 +7,7 @@ class SearchController < ApplicationController
 
   # GET /search
   def search
-    finder = UserFinder.new(self)
+    finder = UserFinder.new(UserCreator.new(self))
     finder.find_by_name params[:name]
   end
 

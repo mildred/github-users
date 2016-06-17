@@ -2,6 +2,10 @@
 
 require 'cucumber/rspec/doubles'
 
+Given(/^A user is saved with "([^"]*)"$/) do |username|
+  @user = User.create login: username
+end
+
 When(/^I search an unexisting github user$/) do
   within('form') do
     fill_in 'name', with: 'a fake github user'
@@ -10,6 +14,7 @@ When(/^I search an unexisting github user$/) do
 end
 
 When(/^I search an existing github "([^"]*)"$/) do |username|
+  @username = username
   within('form') do
     fill_in 'name', with: username
   end
@@ -72,4 +77,14 @@ end
 
 Then(/^a message "([^"]*)" is displayed$/) do |message|
   expect(page).to have_css('.text-warning', text: message)
+end
+
+Then(/^I store the user with repositories in database$/) do
+  expect(User.find_by(login: @username)).not_to be_nil
+  expect(User.find_by(login: @username).repositories).not_to be_empty
+end
+
+Then(/^I update the user$/) do
+  expect(User.where(login: @user.login).count).to eq 1
+  expect(User.find_by(login: @user.login).repositories).not_to be_empty
 end
