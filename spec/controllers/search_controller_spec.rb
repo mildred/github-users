@@ -24,10 +24,10 @@ RSpec.describe SearchController, type: :controller do
       let(:name) { 'eunomie' }
       let(:repositories) do
         [
-          Repository.new(name: Faker::Superhero.name,
-                         updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
-          Repository.new(name: Faker::Superhero.name,
-                         updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+          GithubRepository.new(name: Faker::Superhero.name,
+                               updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+          GithubRepository.new(name: Faker::Superhero.name,
+                               updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
         ]
       end
       let(:octokit_user) { Sawyer::Resource.new(Octokit.agent, login: name, name: user_name) }

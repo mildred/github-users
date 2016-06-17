@@ -6,7 +6,7 @@ class GithubUser
 
   attr_reader :login, :name, :repositories
 
-  Contract KeywordArgs[login: String, name: String, repositories: ArrayOf[Repository]] => GithubUser
+  Contract KeywordArgs[login: String, name: String, repositories: ArrayOf[GithubRepository]] => GithubUser
   def initialize(login:, name:, repositories:)
     @login = login
     @name = name
@@ -21,7 +21,7 @@ class GithubUser
       repositories == other.repositories
   end
 
-  Contract RespondTo[:login, :name], KeywordArgs[with_repositories: ArrayOf[Repository]] => GithubUser
+  Contract RespondTo[:login, :name], KeywordArgs[with_repositories: ArrayOf[GithubRepository]] => GithubUser
   def self.from(user, with_repositories:)
     GithubUser.new login: user.login, name: user.name, repositories: with_repositories
   end

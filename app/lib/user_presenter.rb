@@ -17,7 +17,7 @@ class UserPresenter < SimpleDelegator
     __getobj__
   end
 
-  Contract None => ArrayOf[Repository]
+  Contract None => ArrayOf[GithubRepository]
   def repositories
     user.repositories.sort { |repo1, repo2| repo2.updated_at <=> repo1.updated_at }
   end

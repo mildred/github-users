@@ -1,28 +1,28 @@
 # frozen_string_literal: true
 
-class Repository
+class GithubRepository
   include Contracts::Core
   include Contracts::Builtin
 
   attr_reader :name, :updated_at
 
-  Contract KeywordArgs[name: String, updated_at: Time] => Repository
+  Contract KeywordArgs[name: String, updated_at: Time] => GithubRepository
   def initialize(name:, updated_at:)
     @name = name
     @updated_at = updated_at
     self
   end
 
-  Contract Repository => Bool
+  Contract GithubRepository => Bool
   def ==(other)
     name == other.name &&
       updated_at == other.updated_at
   end
 
-  Contract RespondTo[:name, :updated_at, :pushed_at] => Repository
+  Contract RespondTo[:name, :updated_at, :pushed_at] => GithubRepository
   def self.from(repository)
     updated_at = most_recent_date repository.updated_at, repository.pushed_at
-    Repository.new name: repository.name, updated_at: updated_at
+    GithubRepository.new name: repository.name, updated_at: updated_at
   end
 
   Contract Maybe[Time], Maybe[Time] => Time

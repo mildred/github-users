@@ -7,10 +7,10 @@ RSpec.describe GithubUser do
   let(:name) { Faker::Superhero.name }
   let(:repositories) do
     [
-      Repository.new(name: Faker::Superhero.name,
-                     updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
-      Repository.new(name: Faker::Superhero.name,
-                     updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+      GithubRepository.new(name: Faker::Superhero.name,
+                           updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+      GithubRepository.new(name: Faker::Superhero.name,
+                           updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
     ]
   end
 
@@ -122,8 +122,8 @@ RSpec.describe GithubUser do
     it 'should return false if two objects have different repositories' do
       user1 = GithubUser.new login: login, name: name, repositories: repositories
       other_repos = [
-        Repository.new(name: Faker::Superhero.name,
-                       updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+        GithubRepository.new(name: Faker::Superhero.name,
+                             updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
       ]
 
       user2 = GithubUser.new login: login, name: name, repositories: other_repos

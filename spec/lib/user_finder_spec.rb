@@ -75,10 +75,10 @@ RSpec.describe UserFinder do
     context 'with a valid github user' do
       let(:repositories) do
         [
-          Repository.new(name: Faker::Superhero.name,
-                         updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
-          Repository.new(name: Faker::Superhero.name,
-                         updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+          GithubRepository.new(name: Faker::Superhero.name,
+                               updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+          GithubRepository.new(name: Faker::Superhero.name,
+                               updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
         ]
       end
       let(:user_name) { Faker::Superhero.name }

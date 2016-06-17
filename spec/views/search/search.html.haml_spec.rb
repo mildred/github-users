@@ -6,10 +6,10 @@ RSpec.describe 'search/search.html.haml' do
   context 'Given a github user' do
     let(:repositories) do
       [
-        Repository.new(name: Faker::Superhero.name,
-                       updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
-        Repository.new(name: Faker::Superhero.name,
-                       updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+        GithubRepository.new(name: Faker::Superhero.name,
+                             updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+        GithubRepository.new(name: Faker::Superhero.name,
+                             updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
       ]
     end
     let(:user) do

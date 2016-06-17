@@ -28,7 +28,7 @@ class UserFinder
   def find_user(name)
     octokit_user = Octokit.user name
     octokit_repos = Octokit.repositories name
-    repos = octokit_repos.map { |repo| Repository.from repo }
+    repos = octokit_repos.map { |repo| GithubRepository.from repo }
     GithubUser.from octokit_user, with_repositories: repos
   end
 end
