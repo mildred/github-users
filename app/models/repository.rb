@@ -19,8 +19,20 @@ class Repository
       updated_at == other.updated_at
   end
 
-  Contract RespondTo[:name, :updated_at] => Repository
+  Contract RespondTo[:name, :updated_at, :pushed_at] => Repository
   def self.from(repository)
-    Repository.new name: repository.name, updated_at: repository.updated_at
+    updated_at = most_recent_date repository.updated_at, repository.pushed_at
+    Repository.new name: repository.name, updated_at: updated_at
+  end
+
+  Contract Maybe[Time], Maybe[Time] => Time
+  def self.most_recent_date(date1, date2)
+    if date1.nil?
+      date2
+    elsif date2.nil?
+      date1
+    else
+      [date1, date2].max
+    end
   end
 end

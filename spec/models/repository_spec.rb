@@ -4,7 +4,8 @@ require 'rails_helper'
 
 RSpec.describe Repository do
   let(:name) { Faker::App.name }
-  let(:updated_at) { Faker::Time.between(2.days.ago, Time.zone.today) }
+  let(:updated_at) { Faker::Time.between(3.weeks.ago, Time.zone.today) }
+  let(:pushed_at) { Faker::Time.between(updated_at, Time.zone.today) }
 
   describe '::new' do
     it 'should store name and date' do
@@ -31,13 +32,43 @@ RSpec.describe Repository do
     end
   end
 
+  describe '::most_recent_date' do
+    let(:date) { Faker::Time.between(2.days.ago, Time.zone.today) }
+    let(:date_before) { Faker::Time.between(3.days.ago(date), 1.days.ago(date)) }
+
+    it 'should return the most recent date' do
+      expect(Repository.most_recent_date(date, date_before)).to eq date
+      expect(Repository.most_recent_date(date_before, date)).to eq date
+    end
+
+    it 'should return the non nil date if one is nil' do
+      expect(Repository.most_recent_date(date, nil)).to eq date
+      expect(Repository.most_recent_date(nil, date)).to eq date
+    end
+
+    it 'should not accept if both are nil' do
+      expect { Repository.most_recent_date(nil, nil) }.to raise_error ContractError
+    end
+
+    it 'should not accept other than Time' do
+      expect { Repository.most_recent_date(nil, 2) }.to raise_error ContractError
+      expect { Repository.most_recent_date([], nil) }.to raise_error ContractError
+      expect { Repository.most_recent_date(nil, {}) }.to raise_error ContractError
+      expect { Repository.most_recent_date(nil, true) }.to raise_error ContractError
+      expect { Repository.most_recent_date(nil, 'plop') }.to raise_error ContractError
+    end
+  end
+
   describe '::from' do
-    let(:octokit_repo) { Sawyer::Resource.new(Octokit.agent, name: name, updated_at: updated_at) }
-    before { allow(Repository).to receive(:new).with(name: name, updated_at: updated_at).and_call_original }
+    let(:octokit_repo) { Sawyer::Resource.new(Octokit.agent, name: name, updated_at: updated_at, pushed_at: pushed_at) }
+    let(:most_recent_date) { Repository.most_recent_date(updated_at, pushed_at) }
+    before { allow(Repository).to receive(:new).with(name: name, updated_at: most_recent_date).and_call_original }
 
     it 'should create a new repository with name and date' do
+      allow(Repository).to receive(:most_recent_date).with(updated_at, pushed_at).and_call_original
       expect(Repository.from(octokit_repo)).to be_a Repository
-      expect(Repository).to have_received(:new).with(name: name, updated_at: updated_at)
+      expect(Repository).to have_received(:new).with(name: name, updated_at: most_recent_date)
+      expect(Repository).to have_received(:most_recent_date).with(updated_at, pushed_at)
     end
   end
 

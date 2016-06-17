@@ -33,7 +33,7 @@ RSpec.describe SearchController, type: :controller do
       let(:octokit_user) { Sawyer::Resource.new(Octokit.agent, login: name, name: user_name) }
       let(:octokit_repos) do
         repositories.map do |repo|
-          Sawyer::Resource.new(Octokit.agent, name: repo.name, updated_at: repo.updated_at)
+          Sawyer::Resource.new(Octokit.agent, name: repo.name, updated_at: repo.updated_at, pushed_at: nil)
         end
       end
       before { allow(Octokit).to receive(:user).with(name).and_return(octokit_user) }

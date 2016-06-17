@@ -86,7 +86,7 @@ RSpec.describe UserFinder do
       let(:octokit_user) { Sawyer::Resource.new(Octokit.agent, login: user_name, name: name) }
       let(:octokit_repos) do
         repositories.map do |repo|
-          Sawyer::Resource.new(Octokit.agent, name: repo.name, updated_at: repo.updated_at)
+          Sawyer::Resource.new(Octokit.agent, name: repo.name, updated_at: repo.updated_at, pushed_at: nil)
         end
       end
       before { allow(Octokit).to receive(:user).with(name).and_return(octokit_user) }
