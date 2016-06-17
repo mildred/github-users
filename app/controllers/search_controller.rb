@@ -7,11 +7,11 @@ class SearchController < ApplicationController
 
   # GET /search
   def search
-    finder = UserFinder.new(self)
+    finder = UserFinder.new(UserCreator.new(self))
     finder.find_by_name params[:name]
   end
 
-  Contract(User => Any)
+  Contract(GithubUser => Any)
   def user_found(user)
     @user = UserPresenter.new user
     render :search

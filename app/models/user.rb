@@ -1,28 +1,17 @@
 # frozen_string_literal: true
 
-class User
+class User < ActiveRecord::Base
   include Contracts::Core
   include Contracts::Builtin
 
-  attr_reader :login, :name, :repositories
+  has_many :repositories
 
-  Contract KeywordArgs[login: String, name: String, repositories: ArrayOf[Repository]] => User
-  def initialize(login:, name:, repositories:)
-    @login = login
-    @name = name
-    @repositories = repositories
-    self
-  end
-
-  Contract User => Bool
-  def ==(other)
-    login == other.login &&
-      name == other.name &&
-      repositories == other.repositories
-  end
-
-  Contract RespondTo[:login, :name], KeywordArgs[with_repositories: ArrayOf[Repository]] => User
-  def self.from(user, with_repositories:)
-    User.new login: user.login, name: user.name, repositories: with_repositories
+  Contract GithubUser => User
+  def self.create_or_update(github_user)
+    user = find_or_create_by login: github_user.login
+    user.update name: github_user.name,
+                followers: github_user.followers,
+                repositories: github_user.repositories.map { |repo| Repository.create_or_update repo }
+    user
   end
 end

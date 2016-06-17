@@ -53,3 +53,31 @@ Feature: As a visitor I want to show informations about a github user
     When I search an existing github user without repository
     Then the repository list is empty
     And a message "The user has no repository" is displayed
+
+  Scenario Outline: Save user
+    Given I am on the root page
+    When I search an existing github "<username>"
+    Then I store the user with repositories in database
+    Examples:
+    |username|
+    |eunomie|
+    |defunkt|
+
+  Scenario Outline: Update user
+    Given I am on the root page
+    And A user is saved with "<username>"
+    When I search an existing github "<username>"
+    Then I update the user
+    Examples:
+    |username|
+    |eunomie|
+    |defunkt|
+
+  Scenario Outline: Store followers
+    Given I am on the root page
+    When I search an existing github "<username>"
+    Then I store the number of followers for the user identified by "<username>"
+    Examples:
+    |username|
+    |eunomie|
+    |defunkt|

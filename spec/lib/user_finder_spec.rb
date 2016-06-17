@@ -75,15 +75,26 @@ RSpec.describe UserFinder do
     context 'with a valid github user' do
       let(:repositories) do
         [
-          Repository.new(name: Faker::Superhero.name,
-                         updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
-          Repository.new(name: Faker::Superhero.name,
-                         updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+          GithubRepository.new(name: Faker::Superhero.name,
+                               updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+          GithubRepository.new(name: Faker::Superhero.name,
+                               updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
         ]
       end
       let(:user_name) { Faker::Superhero.name }
-      let(:user) { User.new(login: user_name, name: name, repositories: repositories) }
-      let(:octokit_user) { Sawyer::Resource.new(Octokit.agent, login: user_name, name: name) }
+      let(:followers) { Faker::Number.number(3).to_i }
+      let(:user) do
+        GithubUser.new(login: user_name,
+                       name: name,
+                       followers: followers,
+                       repositories: repositories)
+      end
+      let(:octokit_user) do
+        Sawyer::Resource.new(Octokit.agent,
+                             login: user_name,
+                             name: name,
+                             followers: followers)
+      end
       let(:octokit_repos) do
         repositories.map do |repo|
           Sawyer::Resource.new(Octokit.agent, name: repo.name, updated_at: repo.updated_at, pushed_at: nil)

@@ -5,15 +5,21 @@ require 'rails_helper'
 RSpec.describe UserPresenter do
   let(:repositories) do
     [
-      Repository.new(name: Faker::Superhero.name,
-                     updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
-      Repository.new(name: Faker::Superhero.name,
-                     updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+      GithubRepository.new(name: Faker::Superhero.name,
+                           updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+      GithubRepository.new(name: Faker::Superhero.name,
+                           updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
     ]
   end
   let(:name) { Faker::Superhero.name }
   let(:user_name) { Faker::Superhero.name }
-  let(:user) { User.new(login: user_name, name: name, repositories: repositories) }
+  let(:followers) { Faker::Number.number(3).to_i }
+  let(:user) do
+    GithubUser.new(login: user_name,
+                   name: name,
+                   followers: followers,
+                   repositories: repositories)
+  end
 
   describe '::new' do
     it 'should accept User' do
@@ -24,7 +30,7 @@ RSpec.describe UserPresenter do
       expect { UserPresenter.new(2) }.to raise_error ContractError
       expect { UserPresenter.new(nil) }.to raise_error ContractError
       expect { UserPresenter.new([]) }.to raise_error ContractError
-      expect { UserPresenter.new([User]) }.to raise_error ContractError
+      expect { UserPresenter.new([GithubUser]) }.to raise_error ContractError
       expect { UserPresenter.new({}) }.to raise_error ContractError
       expect { UserPresenter.new(true) }.to raise_error ContractError
       expect { UserPresenter.new(repositories.first) }.to raise_error ContractError
