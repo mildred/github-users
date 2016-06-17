@@ -45,4 +45,19 @@ RSpec.describe 'search/search.html.haml' do
       end
     end
   end
+
+  context 'Given a user without repository' do
+    let(:user) do
+      UserPresenter.new(User.new(name: Faker::Superhero.name,
+                                 login: Faker::Superhero.name,
+                                 repositories: []))
+    end
+
+    it 'should display an message' do
+      assign(:user, user)
+      render
+
+      expect(render).to have_content 'The user has no repository'
+    end
+  end
 end

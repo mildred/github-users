@@ -1,9 +1,16 @@
 %h1= @user.name
 
-- @user.repositories.each do |repo|
+- if @user.repositories.empty?
   .row
     .col-md-8.col-md-offset-2
       .card
         .card-block
-          %h4.card-title= repo.name
-          %p.card-text= repo.updated_at
+          .card-text.text-warning The user has no repository
+- else
+  - @user.repositories.each do |repo|
+    .row
+      .col-md-8.col-md-offset-2
+        .card.repository
+          .card-block
+            %h4.card-title= repo.name
+            %p.card-text= repo.updated_at

@@ -48,7 +48,6 @@ Feature: As a visitor I want to show informations about a github user
     |eunomie|
     |defunkt|
 
-  @wip
   Scenario: User has no repository
     Given I am on the root page
     When I search an existing github user without repository
