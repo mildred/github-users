@@ -13,7 +13,9 @@ RSpec.describe 'search/search.html.haml' do
       ]
     end
     let(:user) do
-      User.new(name: Faker::Superhero.name, login: Faker::Superhero.name, repositories: repositories)
+      UserPresenter.new(User.new(name: Faker::Superhero.name,
+                                 login: Faker::Superhero.name,
+                                 repositories: repositories))
     end
 
     it 'should display the name of the user' do

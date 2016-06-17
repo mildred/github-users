@@ -39,11 +39,14 @@ Feature: As a visitor I want to show informations about a github user
     |username|repositories|
     |eunomie|12factor!2015-05-26 13:03:28 UTC,action_cable_demo!2016-01-21 21:47:25 UTC,angular-phonecat!2013-06-18 07:31:48 UTC,angular.js!2014-01-15 20:51:04 UTC,asentaa!2013-12-10 14:40:09 UTC|
 
-  @wip
-  Scenario: Order repositories by date
+  Scenario Outline: Order repositories by date
     Given I am on the root page
     When I search an existing github "<username>"
-    Then I order repositories by date
+    Then repositories are ordered by date
+    Examples:
+    |username|
+    |eunomie|
+    |defunkt|
 
   @wip
   Scenario: User has no repository

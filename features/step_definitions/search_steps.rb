@@ -33,8 +33,18 @@ end
 Then(/^I display a date for github "([^"]*)"$/) do |repositories|
   repositories.split(',').each do |repo|
     infos = repo.split('!')
-    expect(page).to have_css('.card', text: /#{infos.first}.*#{infos.last}/)
+    expect(page).to have_css('.card') do |card|
+      expect(card).to contain(/#{infos.first}.*#{infos.last}/)
+    end
   end
+end
+
+Then(/^repositories are ordered by date$/) do
+  dates = []
+  page.all('.card-text').each do |el|
+    dates << Time.zone.parse(el.text)
+  end
+  expect(dates).to eq dates.sort.reverse
 end
 
 Then(/^an error "([^"]*)" is displayed$/) do |message|

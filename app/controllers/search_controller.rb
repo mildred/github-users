@@ -13,7 +13,7 @@ class SearchController < ApplicationController
 
   Contract(User => Any)
   def user_found(user)
-    @user = user
+    @user = UserPresenter.new user
     render :search
   end
 
