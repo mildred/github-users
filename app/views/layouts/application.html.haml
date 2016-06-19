@@ -10,7 +10,11 @@
   %body
     .container.main
       %nav.navbar.navbar-light.bg-faded.navbar-fixed-top
-        = link_to 'Github Users', root_path, class: 'navbar-brand'
+        %ul.nav.navbar-nav
+          %li.nav-item
+            = link_to 'Search GitHub User', root_path, class: ['nav-link', ('active' if current_page?(controller: 'search'))]
+          %li.nav-item
+            = link_to 'All Users', users_path, class: ['nav-link', ('active' if current_page?(controller: 'users'))]
       #flash.container
         = render 'layouts/flash'
       = yield
