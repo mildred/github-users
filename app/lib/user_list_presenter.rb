@@ -10,10 +10,10 @@ class UserListPresenter
     self
   end
 
-  Contract Func[User => Any] => Any
+  Contract Func[String, Num => Any] => Any
   def each(&block)
     @users.each do |user|
-      block.call user # rubocop:disable Performance/RedundantBlockCall
+      block.call user.name, user.repositories.count # rubocop:disable Performance/RedundantBlockCall
     end
   end
 end
