@@ -1,0 +1,12 @@
+%h1 Users
+
+- unless @users.nil?
+  - @users.each do |name, nb_repositories|
+    .row
+      .col-md-8.col-md-offset-2
+        .card.user
+          .card-block
+            %h4.card-title= name
+            %p.card-text
+              = nb_repositories
+              repositories
