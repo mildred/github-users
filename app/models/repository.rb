@@ -9,7 +9,7 @@ class Repository < ActiveRecord::Base
   Contract GithubRepository => Repository
   def self.create_or_update(github_repository)
     repo = find_or_create_by name: github_repository.name
-    repo.update last_activity_at: github_repository.updated_at
+    repo.update repo_created_at: github_repository.created_at
     repo
   end
 end

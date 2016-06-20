@@ -8,10 +8,10 @@ RSpec.describe 'search/search.html.haml' do
       [
         GithubRepository.new(name: Faker::Superhero.name,
                              stars: Faker::Number.number(3).to_i,
-                             updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+                             created_at: Faker::Time.between(10.days.ago, Time.zone.today)),
         GithubRepository.new(name: Faker::Superhero.name,
                              stars: Faker::Number.number(3).to_i,
-                             updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+                             created_at: Faker::Time.between(10.days.ago, Time.zone.today))
       ]
     end
     let(:user) do
@@ -42,7 +42,7 @@ RSpec.describe 'search/search.html.haml' do
 
       repositories.each do |repo|
         expect(rendered).to have_selector '.card' do |card|
-          expect(card).to contain(/#{repo.name}.*#{repo.updated_at}/)
+          expect(card).to contain(/#{repo.name}.*#{repo.created_at}/)
         end
       end
     end
