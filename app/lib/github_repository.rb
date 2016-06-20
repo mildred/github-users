@@ -4,11 +4,12 @@ class GithubRepository
   include Contracts::Core
   include Contracts::Builtin
 
-  attr_reader :name, :updated_at
+  attr_reader :name, :updated_at, :stars
 
-  Contract KeywordArgs[name: String, updated_at: Time] => GithubRepository
-  def initialize(name:, updated_at:)
+  Contract KeywordArgs[name: String, updated_at: Time, stars: Num] => GithubRepository
+  def initialize(name:, stars:, updated_at:)
     @name = name
+    @stars = stars
     @updated_at = updated_at
     self
   end
@@ -16,13 +17,14 @@ class GithubRepository
   Contract GithubRepository => Bool
   def ==(other)
     name == other.name &&
+      stars == other.stars &&
       updated_at == other.updated_at
   end
 
-  Contract RespondTo[:name, :updated_at, :pushed_at] => GithubRepository
+  Contract RespondTo[:name, :stargazers_count, :updated_at, :pushed_at] => GithubRepository
   def self.from(repository)
     updated_at = most_recent_date repository.updated_at, repository.pushed_at
-    GithubRepository.new name: repository.name, updated_at: updated_at
+    GithubRepository.new name: repository.name, stars: repository.stargazers_count, updated_at: updated_at
   end
 
   Contract Maybe[Time], Maybe[Time] => Time

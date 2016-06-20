@@ -6,18 +6,18 @@ RSpec.describe UserPresenter do
   let(:repositories) do
     [
       GithubRepository.new(name: Faker::Superhero.name,
+                           stars: Faker::Number.between(0, 100),
                            updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
       GithubRepository.new(name: Faker::Superhero.name,
+                           stars: Faker::Number.between(0, 100),
                            updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
     ]
   end
   let(:name) { Faker::Superhero.name }
   let(:user_name) { Faker::Superhero.name }
-  let(:followers) { Faker::Number.number(3).to_i }
   let(:user) do
     GithubUser.new(login: user_name,
                    name: name,
-                   followers: followers,
                    repositories: repositories)
   end
 

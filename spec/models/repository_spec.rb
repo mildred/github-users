@@ -10,7 +10,8 @@ RSpec.describe Repository do
   describe '::create_or_update' do
     let(:name) { Faker::Superhero.name }
     let(:updated_at) { Faker::Time.between(10.days.ago, Time.zone.today) }
-    let(:github_repository) { GithubRepository.new(name: name, updated_at: updated_at) }
+    let(:stars) { Faker::Number.between(0, 100) }
+    let(:github_repository) { GithubRepository.new(name: name, stars: stars, updated_at: updated_at) }
 
     context 'repository does not exists' do
       it 'should create the repository' do
@@ -24,7 +25,7 @@ RSpec.describe Repository do
     context 'repository exists' do
       let(:old_updated_at) { Faker::Time.between(10.days.ago, Time.zone.today) }
       before do
-        Repository.create_or_update GithubRepository.new(name: name, updated_at: old_updated_at)
+        Repository.create_or_update GithubRepository.new(name: name, stars: stars, updated_at: old_updated_at)
       end
 
       it 'should update the repository' do

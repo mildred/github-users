@@ -4,7 +4,7 @@ FactoryGirl.define do
   factory :user do
     login Faker::Superhero.name
     name Faker::Superhero.name
-    followers Faker::Number.between(1, 1000)
+    stars Faker::Number.between(1, 1000)
     repositories []
 
     factory :user_with_repositories do

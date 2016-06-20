@@ -25,21 +25,25 @@ RSpec.describe SearchController, type: :controller do
       let(:repositories) do
         [
           GithubRepository.new(name: Faker::Superhero.name,
+                               stars: Faker::Number.number(3).to_i,
                                updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
           GithubRepository.new(name: Faker::Superhero.name,
+                               stars: Faker::Number.number(3).to_i,
                                updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
         ]
       end
-      let(:followers) { Faker::Number.number(3).to_i }
       let(:octokit_user) do
         Sawyer::Resource.new(Octokit.agent,
                              login: name,
-                             name: user_name,
-                             followers: followers)
+                             name: user_name)
       end
       let(:octokit_repos) do
         repositories.map do |repo|
-          Sawyer::Resource.new(Octokit.agent, name: repo.name, updated_at: repo.updated_at, pushed_at: nil)
+          Sawyer::Resource.new(Octokit.agent,
+                               name: repo.name,
+                               stargazers_count: repo.stars,
+                               updated_at: repo.updated_at,
+                               pushed_at: nil)
         end
       end
       before { allow(Octokit).to receive(:user).with(name).and_return(octokit_user) }
