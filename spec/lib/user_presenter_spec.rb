@@ -7,10 +7,10 @@ RSpec.describe UserPresenter do
     [
       GithubRepository.new(name: Faker::Superhero.name,
                            stars: Faker::Number.between(0, 100),
-                           updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+                           created_at: Faker::Time.between(10.days.ago, Time.zone.today)),
       GithubRepository.new(name: Faker::Superhero.name,
                            stars: Faker::Number.between(0, 100),
-                           updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+                           created_at: Faker::Time.between(10.days.ago, Time.zone.today))
     ]
   end
   let(:name) { Faker::Superhero.name }
@@ -41,5 +41,5 @@ RSpec.describe UserPresenter do
 
   it { expect(subject.user).to eq(user) }
   it { expect(subject.name).to eq(user.name) }
-  it { expect(subject.repositories).to eq(repositories.sort_by(&:updated_at).reverse) }
+  it { expect(subject.repositories).to eq(repositories.sort_by(&:created_at).reverse) }
 end

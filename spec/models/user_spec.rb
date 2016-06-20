@@ -13,10 +13,10 @@ RSpec.describe User do
       [
         GithubRepository.new(name: Faker::Superhero.name,
                              stars: Faker::Number.between(0, 100),
-                             updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+                             created_at: Faker::Time.between(10.days.ago, Time.zone.today)),
         GithubRepository.new(name: Faker::Superhero.name,
                              stars: Faker::Number.between(0, 100),
-                             updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+                             created_at: Faker::Time.between(10.days.ago, Time.zone.today))
       ]
     end
     let(:user_name) { Faker::Superhero.name }

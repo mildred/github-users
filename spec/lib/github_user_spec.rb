@@ -10,10 +10,10 @@ RSpec.describe GithubUser do
     [
       GithubRepository.new(name: Faker::Superhero.name,
                            stars: Faker::Number.between(0, 100),
-                           updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
+                           created_at: Faker::Time.between(10.days.ago, Time.zone.today)),
       GithubRepository.new(name: Faker::Superhero.name,
                            stars: Faker::Number.between(0, 100),
-                           updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+                           created_at: Faker::Time.between(10.days.ago, Time.zone.today))
     ]
   end
 
@@ -136,7 +136,7 @@ RSpec.describe GithubUser do
       repo = repositories.map do |r|
         GithubRepository.new(name: r.name,
                              stars: r.stars + 1,
-                             updated_at: r.updated_at)
+                             created_at: r.created_at)
       end
       user2 = GithubUser.new login: login,
                              name: name,
@@ -149,7 +149,7 @@ RSpec.describe GithubUser do
       other_repos = [
         GithubRepository.new(name: Faker::Superhero.name,
                              stars: Faker::Number.between(0, 100),
-                             updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
+                             created_at: Faker::Time.between(10.days.ago, Time.zone.today))
       ]
 
       user2 = GithubUser.new login: login, name: name, repositories: other_repos

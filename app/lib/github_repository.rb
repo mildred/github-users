@@ -4,13 +4,13 @@ class GithubRepository
   include Contracts::Core
   include Contracts::Builtin
 
-  attr_reader :name, :updated_at, :stars
+  attr_reader :name, :created_at, :stars
 
-  Contract KeywordArgs[name: String, updated_at: Time, stars: Num] => GithubRepository
-  def initialize(name:, stars:, updated_at:)
+  Contract KeywordArgs[name: String, created_at: Time, stars: Num] => GithubRepository
+  def initialize(name:, stars:, created_at:)
     @name = name
     @stars = stars
-    @updated_at = updated_at
+    @created_at = created_at
     self
   end
 
@@ -18,23 +18,13 @@ class GithubRepository
   def ==(other)
     name == other.name &&
       stars == other.stars &&
-      updated_at == other.updated_at
+      created_at == other.created_at
   end
 
-  Contract RespondTo[:name, :stargazers_count, :updated_at, :pushed_at] => GithubRepository
+  Contract RespondTo[:name, :stargazers_count, :created_at] => GithubRepository
   def self.from(repository)
-    updated_at = most_recent_date repository.updated_at, repository.pushed_at
-    GithubRepository.new name: repository.name, stars: repository.stargazers_count, updated_at: updated_at
-  end
-
-  Contract Maybe[Time], Maybe[Time] => Time
-  def self.most_recent_date(date1, date2)
-    if date1.nil?
-      date2
-    elsif date2.nil?
-      date1
-    else
-      [date1, date2].max
-    end
+    GithubRepository.new(name: repository.name,
+                         stars: repository.stargazers_count,
+                         created_at: repository.created_at)
   end
 end

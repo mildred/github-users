@@ -11,15 +11,15 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160619193448) do
+ActiveRecord::Schema.define(version: 20160620190105) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "repositories", force: :cascade do |t|
     t.string   "name"
-    t.datetime "last_activity_at"
     t.integer  "user_id"
+    t.datetime "repo_created_at"
   end
 
   add_index "repositories", ["user_id"], name: "index_repositories_on_user_id", using: :btree
