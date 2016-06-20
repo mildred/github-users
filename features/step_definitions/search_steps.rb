@@ -1,4 +1,4 @@
-# frozen_string_literal: true
+# _frozen_string_literal: true
 
 require 'cucumber/rspec/doubles'
 
@@ -90,6 +90,8 @@ Then(/^I update the user$/) do
   expect(User.find_by(login: @user.login).repositories).not_to be_empty
 end
 
-Then(/^I store the number of followers for the user identified by "([^"]*)"$/) do |username|
-  expect(User.find_by(login: username).followers).to be > 0
+Then(/^I store the number of stars for all repositories of the user identified by "([^"]*)"$/) do |username|
+  user_repos = Octokit.repositories username
+  stars = user_repos.map(&:stargazers_count).inject(0, &:+)
+  expect(User.find_by(login: username).stars).to be stars
 end

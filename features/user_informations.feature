@@ -76,7 +76,7 @@ Feature: As a visitor I want to show informations about a github user
   Scenario Outline: Store followers
     Given I am on the root page
     When I search an existing github "<username>"
-    Then I store the number of followers for the user identified by "<username>"
+    Then I store the number of stars for all repositories of the user identified by "<username>"
     Examples:
     |username|
     |eunomie|

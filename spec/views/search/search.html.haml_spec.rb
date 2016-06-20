@@ -7,15 +7,16 @@ RSpec.describe 'search/search.html.haml' do
     let(:repositories) do
       [
         GithubRepository.new(name: Faker::Superhero.name,
+                             stars: Faker::Number.number(3).to_i,
                              updated_at: Faker::Time.between(10.days.ago, Time.zone.today)),
         GithubRepository.new(name: Faker::Superhero.name,
+                             stars: Faker::Number.number(3).to_i,
                              updated_at: Faker::Time.between(10.days.ago, Time.zone.today))
       ]
     end
     let(:user) do
       UserPresenter.new(GithubUser.new(name: Faker::Superhero.name,
                                        login: Faker::Superhero.name,
-                                       followers: Faker::Number.number(3).to_i,
                                        repositories: repositories))
     end
 
@@ -51,7 +52,6 @@ RSpec.describe 'search/search.html.haml' do
     let(:user) do
       UserPresenter.new(GithubUser.new(name: Faker::Superhero.name,
                                        login: Faker::Superhero.name,
-                                       followers: Faker::Number.number(3).to_i,
                                        repositories: []))
     end
 
