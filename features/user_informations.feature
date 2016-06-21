@@ -26,18 +26,20 @@ Feature: As a visitor I want to show informations about a github user
   Scenario Outline: Display repositories of the user
     Given I am on the root page
     When I search an existing github "<username>"
-    Then I display a list of github "<repositories>"
+    Then I display a list of github repositories for the user "<username>"
     Examples:
-    |username|repositories|
-    |eunomie|12factor,action_cable_demo,angular-phonecat,angular.js,asentaa|
+    |username|
+    |eunomie|
+    |defunkt|
 
   Scenario Outline: Display date of repositories
     Given I am on the root page
     When I search an existing github "<username>"
-    Then I display a date for github "<repositories>"
+    Then I display the creation date for repositories of user "<username>"
     Examples:
-    |username|repositories|
-    |eunomie|12factor!2015-05-26 13:03:28 UTC,action_cable_demo!2016-01-21 21:47:25 UTC,angular-phonecat!2013-06-18 07:31:48 UTC,angular.js!2014-01-15 20:51:04 UTC,asentaa!2013-12-10 14:40:09 UTC|
+    |username|
+    |eunomie|
+    |defunkt|
 
   Scenario Outline: Order repositories by date
     Given I am on the root page
