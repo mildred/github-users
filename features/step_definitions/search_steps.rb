@@ -43,18 +43,19 @@ Then(/^I can show the "([^"]*)" of the user$/) do |name|
   expect(page.find('h1')).to have_content name
 end
 
-Then(/^I display a list of github "([^"]*)"$/) do |repositories|
+Then(/^I display a list of github repositories for the user "([^"]*)"$/) do |username|
   expect(page).to have_css('.repository')
-  repositories.split(',').each do |repo|
-    expect(page).to have_css('.repository .card-title', text: repo)
+  repositories = Octokit.repositories username
+  repositories.each do |repo|
+    expect(page).to have_css('.repository .card-title', text: repo.name)
   end
 end
 
-Then(/^I display a date for github "([^"]*)"$/) do |repositories|
-  repositories.split(',').each do |repo|
-    infos = repo.split('!')
+Then(/^I display the creation date for repositories of user "([^"]*)"$/) do |username|
+  repositories = Octokit.repositories username
+  repositories.each do |repo|
     expect(page).to have_css('.repository') do |card|
-      expect(card).to contain(/#{infos.first}.*#{infos.last}/)
+      expect(card).to contain(/#{repo.name}.*#{repo.created_at}/)
     end
   end
 end
