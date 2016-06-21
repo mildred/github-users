@@ -17,7 +17,7 @@ Installation
 
 - `gem install bundler && bundle install`
 - `bundle exec rake db:prepare`
-- configure the [octokit][] access key
+- configure the [octokit](https://octokit.github.io/) access key
 
   See [./config/application.yml.conf](./config/application.yml.conf) or
   define `octokit_access_token` environment variable.
