@@ -4,11 +4,3 @@ before_script:
 script: bundle exec rake test
 services:
   - postgresql
-deploy:
-  provider: heroku
-  api_key:
-    secure: LQMyn/lt0m53ME5ZCk6fP31BxPSm2AG02alr8W/12nivQAogJ2PICDtOaVWjzHD8tx4ezIYPllfWh/UlP/5ZUzSqV8klDVHxfPow7Zhv3Q9ie+2EQ3/p60HrTpWXb/YKBlwZHbojLnKGVRhnZ3ZMWpcm71TQBto9yrWWGx26bjOgADPvsbkurBqVFZDm4QC9D3JjqdqvsQtO/xdP6z2JwVwfILATfISlbZLMrWpmKVcjeoQ+L+4h9gN2cjuILAvqgQZf8PZLashSQi+lJFXxOXsbwnTeJEuSCRHI/OwksXCN+cUPYTRwnXZB5S5gh79zOna2CxyaHHZlyAm4WT0rDXj1E42FwQatr2zb1uuZBGa9DnxQ7pWOQ9erU3vNwJfrFn4dZlOS5dYi7tvqEJzZINjEhgdOrGXvn+YzPuGMtjckBCdjVfQ9ITKRwhPTZ58OdB6dZvqrzou8WDduPJKbO0/LQWxQrDYW7jRlLkeslMZXFKzHAhxOaellNSvYFvAEtOC/pcfimLWPQsQkslXHnGQ6/Koz7CrtQRijjkmel3xrCSQzlVV+yfNkNCrabN8oFf9i5faLWF1crvNLFS61AqsEbrcBaLd/5YpItBUsQ2Q8D3IhjrsIL3ZHTwPZZaTMqqjVP/atRnp/RhdfVhKMm6FiO1UJFbC3He28eaF48eA=
-  app: github-users-eunomie
-  on:
-    repo: eunomie/github-users
-    branch: master
