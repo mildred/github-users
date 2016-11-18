@@ -18,5 +18,6 @@ COPY Gemfile /usr/src/app/
 COPY Gemfile.lock /usr/src/app/
 RUN bundle install --without test development --jobs 20 --retry 5
 COPY . /usr/src/app
+COPY config/application.yml.conf /usr/src/app/config/application.yml
 RUN RAILS_ENV=production AWS_REGION=deliberately_unset_region rake assets:precompile
 CMD ["bundle", "exec", "rails", "server", "-b", "0.0.0.0"]
