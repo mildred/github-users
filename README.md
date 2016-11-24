@@ -20,7 +20,7 @@ Installation
 - configure the [octokit](https://octokit.github.io/) access key
 
   See [./config/application.yml.conf](./config/application.yml.conf) or
-  define `octokit_access_token` environment variable.
+  define `OCTOKIT_ACCESS_TOKEN` environment variable.
 
 ### Tests
 
